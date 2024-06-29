@@ -217,10 +217,47 @@
         let output = [];
         let emptyKeyValue = [new KeyValue('','')];
 
-    // Fill the output array with output objects.
-    // Scripts cant use comments so delete them before loading them into KETSU.
-    // add a \ if you are going to use ""
-    
+        const panels = document.querySelectorAll('div.col-sm-8 > .panel > .panel-heading');
+
+        for (const panel of panels) {
+
+            const panelName = panel.textContent.trim();
+            if (!panelName.includes('Movies') && !panelName.includes('TV')) {
+                continue;
+            }
+
+            const type = panelName.includes('Movies') ? 'Movies' : 'TV-Series';
+            const alerts = panel.nextElementSibling.querySelectorAll('.row > .col-sm-12 > .row > .col-sm-12 > .alert');
+            for (const alert of alerts) {
+                const alertTitle = alert.textContent.trim();
+                const alertType = alertTitle.includes('Popular') ? 'Popular' : 'Latest';
+                let results = [];
+                const items = alert.parentElement.querySelectorAll('.col-sm-4 > .thumbnail');
+                for (const item of items) {
+                    const title = item.querySelector('div:not(.img-group) > h5 > a').textContent.trim();
+                    let link = item.querySelector('.img-group > a').href;
+                    link = new URL(link, parsedJson.request.url).href;
+                    link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+                    let image = item.querySelector('.img-group > a > img').src;
+                    image = image.indexOf('/') === 0 ? new URL(image, parsedJson.request.url).href : image;
+                    image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+                    let extra = item.querySelector('.img-group > .img-tip').textContent.trim();
+                    if (panelName.includes('TV')) {
+                        const se = item.querySelector('div:not(.img-group) > h5 > a:last-child').textContent.trim();
+                        const sp = se.replace(/\\[|\\]/g, '').split('×');
+                        extra = sp.length > 1 ? `S${sp[0]}E${sp[1]}` : se;
+                    }
+                    const obj = new Data(image, title, '', extra, '', '', '', false, link, false);
+                    results.push(obj);
+                }
+                if (alertType === 'Popular') {
+                    output.push(new Output(CellDesings.wide6, Orientation.horizontal, DefaultLayouts.longDoubletsFull, Paging.leading, new Section(`${alertType} ${type}`, true), null, results));
+                } else {
+                    output.push(new Output(CellDesings.normal7, Orientation.horizontal, DefaultLayouts.longTripletsDouble, Paging.leading, new Section(`${alertType} ${type}`, true), null, results));
+                }
+                results = [];
+            }
+        }
     
         let MainPageObject = new MainPage(new ModuleRequest('','get',emptyKeyValue,null),new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),new JavascriptConfig(true,false,''),output);
     
@@ -228,5 +265,4 @@
         savedData.innerHTML = finalJson;
         
         </script>
-       
  
