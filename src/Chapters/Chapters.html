@@ -7,6 +7,8 @@
         this.output = output;
     }
 
+    console.log('first');
+
     function ModuleRequest(url, method, headers, httpBody) {
         this.url = url;
         this.method = method;
@@ -77,14 +79,14 @@
     let request = new ModuleRequest('', '', emptyKeyValue, null);
     const url = parsedJson.request.url;
     const requestHeaders = [new KeyValue('x-requested-with', 'XMLHttpRequest'), new KeyValue('referer', url), new KeyValue('content-type', 'application/x-www-form-urlencoded; charset=UTF-8')];
-    if (url.includes('/M') || url.includes('/E')) {
+    if (url.includes('/M') || url.includes('/episode')) {
         const pass = document.getElementById('hId').value.trim();
         const param = document.getElementById('divU').textContent.trim();
         const extra = document.getElementById('divS').textContent.trim();
         const e2 = document.getElementById('hIsW').value.trim();
         const body = `param=${param}&pass=${pass}&extra=${extra}&e2=${e2}`;
         let requestUrl = new URL('/home/index/GetMInfoAjax', url).href;
-        if (url.includes('/E')) {
+        if (url.includes('/episode')) {
             requestUrl = new URL('/home/index/GetEInfoAjax', url).href;
         }
         request = new ModuleRequest(requestUrl, 'post', requestHeaders, body);
@@ -104,9 +106,11 @@
                 subs.push(subobj);
             }
         }
-        output = {};
-        const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
-        output.rawVideo = [new RawVideo([video], subs)];
+        if (data.val) {
+            output = {};
+            const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
+            output.rawVideo = [new RawVideo([video], subs)];
+        }
         if (subs.length == 0) {
             subs = null;
         }
