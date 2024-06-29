@@ -7,8 +7,6 @@
         this.output = output;
     }
 
-    console.log('first');
-
     function ModuleRequest(url, method, headers, httpBody) {
         this.url = url;
         this.method = method;
@@ -107,6 +105,7 @@
             }
         }
         if (data.val) {
+            console.log('adding video ' + data.val)
             output = {};
             const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
             output.rawVideo = [new RawVideo([video], subs)];
