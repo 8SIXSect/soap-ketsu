@@ -104,16 +104,13 @@
                 subs.push(subobj);
             }
         }
-        if (data.val) {
-            output = {};
-            const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
-            output.rawVideo = [new RawVideo([video], subs)];
-        }
+        output = {};
+        const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
+        output.rawVideo = [new RawVideo([video], subs)];
         if (subs.length == 0) {
             subs = null;
         }
     }
-    console.log("executing");
     let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
     var chaptersObject = new Chapters(request, emptyExtra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
     var finalJson = JSON.stringify(chaptersObject);
