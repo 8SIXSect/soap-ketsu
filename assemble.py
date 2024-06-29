@@ -22,7 +22,7 @@ SOURCE_SUB_DIRECTORIES_TO_JSON_OBJECT_MAP: Dict[str, str] = {
     "MainPage": "mainPage",
     "Search": "search",
     "Info": "info",
-    #"Chapters": "chapters"
+    "Chapters": "chapters"
 }
 OUTPUT_INDENT_LEVEL = 4
 
