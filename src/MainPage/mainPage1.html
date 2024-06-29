@@ -193,7 +193,7 @@
             this.openInWebView = openInWebView;
         }
     
-        function quickData(link,image,title,field1)  {
+        function quickData(link,image,title,field1) {
             return new Data(image,title,'unknown',field1,'unknown','unknown','unknown',false,link);
         }
     
@@ -244,7 +244,7 @@
                     let extra = item.querySelector('.img-group > .img-tip').textContent.trim();
                     if (panelName.includes('TV')) {
                         const se = item.querySelector('div:not(.img-group) > h5 > a:last-child').textContent.trim();
-                        const sp = se.replace(/\\[|\\]/g, '').split('×');
+                        const sp = se.replace(/\\[|\\]/g, '').split('x');
                         extra = sp.length > 1 ? `S${sp[0]}E${sp[1]}` : se;
                     }
                     const obj = new Data(image, title, '', extra, '', '', '', false, link, false);
