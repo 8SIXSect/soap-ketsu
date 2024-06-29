@@ -98,7 +98,7 @@ const DefaultLayouts = {
         horizontal : 'horizontal',
         vertical : 'vertical'
     };
-    function Search(request,extra,separator,javascriptConfig,output) {
+    function Search(request,extra,separator,javascriptConfig,output) {
             this.request = request;
             this.extra = extra;
             this.separator = separator;
@@ -113,7 +113,7 @@ const DefaultLayouts = {
             this.httpBody = httpBody;
         }
         
-        function Extra(commands,extraInfo) {
+        function Extra(commands,extraInfo) {
             this.commands = commands;
             this.extraInfo = extraInfo;
         }
@@ -196,7 +196,7 @@ const DefaultLayouts = {
             this.openInWebView = openInWebView;
         }
 
-        function quickData(link,image,title,field1)  {
+        function quickData(link,image,title,field1) {
                 return new Data(image,title,'unknown',field1,'unknown','unknown','unknown',false,link);
             }
 
@@ -219,10 +219,27 @@ const DefaultLayouts = {
 
     let output = [];
     let emptyKeyValue = [new KeyValue('','')];
-
-    // Fill the output array with output objects.
-    // Scripts cant use comments so delete them before loading them into KETSU.
-    // add a \ if you are going to use ""
+    let results = [];
+    const items = document.querySelectorAll('.row > .col-sm-12.no-padding > .col-xs-12.col-sm-12.col-md-12.col-lg-12 > .no-padding > .thumbnail');
+    const requestUrl = new URL(parsedJson.request.url).origin;
+    for (const item of items) {
+        const title = item.querySelector('div:not(.img-group) > h5 > a').textContent.trim();
+        const tlink = item.querySelector('div:not(.img-group) > h5 > a').href;
+        let link = new URL(tlink, requestUrl).href;
+        link = new ModuleRequest(link, 'get', emptyKeyValue, null);
+        let image = item.querySelector('.img-group > a > img').src;
+        image = new ModuleRequest(image, 'get', emptyKeyValue, null);
+        let extra = item.querySelector('.img-group > .img-tip').textContent.trim();
+        if (tlink.indexOf('/T') === 0) {
+            const se = item.querySelector('div:not(.img-group) > h5 > a:last-child').textContent.trim();
+            const sp = se.replace(/\\[|\\]/g, '').split('x');
+            extra = sp.length > 1 ? `S${sp[0]}E${sp[1]}` : se;
+        }
+        const obj = new Data(image, title, extra, '', '', '', '', true, link, false);
+        results.push(obj);
+    }
+    const testLayout = new Layout(new Insets(10, 10, 10, 10), 1, 2, 3, 1, 500, new Size(400, 400), new Ratio('width', 4, 11), new Size(0, 0), 10, 10);
+    output.push(new Output(CellDesings.wide8, Orientation.vertical, DefaultLayouts.none, Paging.none, new Section('', false), testLayout, results));
 
     let searchPageObject = new Search(new ModuleRequest('','',emptyKeyValue,null),new Extra([new Commands('',emptyKeyValue)],emptyKeyValue),'',new JavascriptConfig(true,false,''),output);
 
