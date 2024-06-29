@@ -107,7 +107,7 @@
         if (data.val) {
             output = {};
             const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
-            console.log('vidqual: ' + videoQuality);
+            console.log('vidqual: ' + video.videoQuality);
             console.log('vidlink: ' + JSON.stringify(video), null, 4);
             console.log('vidlink: ' + JSON.stringify(video.videoLink), null, 4);
             output.rawVideo = [new RawVideo([video], subs)];
