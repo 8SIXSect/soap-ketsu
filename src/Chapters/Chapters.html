@@ -113,6 +113,7 @@
             subs = null;
         }
     }
+    console.log("executing");
     let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
     var chaptersObject = new Chapters(request, emptyExtra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
     var finalJson = JSON.stringify(chaptersObject);
