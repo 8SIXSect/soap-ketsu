@@ -11,12 +11,12 @@ Yeah I know it's a javascript project but I don't like JS
 
 import os
 import json
+import sys
 import re
-import jsmin
 from typing import Dict, Any
+import jsmin
 
 
-OUTPUT_FILE_NAME = "soaper-test"
 SOURCE_DIRECTORY = "src"
 OUTPUT_INDENT_LEVEL = 4
 
@@ -25,7 +25,10 @@ if __name__ == "__main__":
     # this print statement just makes everything look nice
     print("\n\n--- STARTING ASSEMBLE ---\n")
 
-    output_file_path = f"{OUTPUT_FILE_NAME}.json"
+    assert len(sys.argv) == 2
+    output_file_name: str = sys.argv[1]
+
+    output_file_path = f"{output_file_name}.json"
     assert os.path.exists(output_file_path)
     print(f"File path exists -> {output_file_path}")
 
