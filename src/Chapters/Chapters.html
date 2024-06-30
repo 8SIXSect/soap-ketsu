@@ -81,7 +81,7 @@
     const url = parsedJson.request.url;
     const requestHeaders = [new KeyValue('x-requested-with', 'XMLHttpRequest'), new KeyValue('referer', url), new KeyValue('content-type', 'application/x-www-form-urlencoded; charset=UTF-8')];
     
-    if (url.includes('/M') || url.includes('/episode')) {
+    if (url.includes('/movie') || url.includes('/episode')) {
         const pass = document.getElementById('hId').value.trim();
         const e2 = document.getElementById('hIsW').value.trim();
         const body = `pass=${pass}&e2=${e2}`;
