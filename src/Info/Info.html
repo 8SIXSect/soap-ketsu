@@ -92,7 +92,7 @@ for (const m of meta) {
     }
 }
 var episodes = [];
-var type = parsedJson.request.url.includes('/M') ? 'Movie' : 'TV-Series';
+var type = parsedJson.request.url.includes('/movie') ? 'Movie' : 'TV-Series';
 var rating = info.rating;
 var status = info.release.length > 5 ? 'Completed' : 'OnGoing';
 var genres = info.genre;
@@ -101,7 +101,7 @@ var title = document.querySelector('.hidden-lg > div > h4').textContent.trim();
 var image = document.querySelector('.hidden-lg > div > .thumbnail > img').src;
 image = image.indexOf('/') === 0 ? new URL(image, parsedJson.request.url).href : image;
 image = new ModuleRequest(image, 'get', emptyKeyValue, null);
-if (parsedJson.request.url.includes('/M')) {
+if (parsedJson.request.url.includes('/movie')) {
     episodes.push(new Chapter('Movie', new ModuleRequest(parsedJson.request.url, 'get', emptyKeyValue), false));
 } else {
     const seasonsEle = document.querySelectorAll('.alert.alert-info-ex');
