@@ -87,7 +87,7 @@
         console.log("param: " + param);
         console.log("extra: " + extra);
         console.log("e2: " + e2);
-        const body = `param=${param}&pass=${pass}&extra=${extra}&e2=${e2}`;
+        const body = `pass=${pass}&e2=${e2}`;
         let requestUrl = new URL('/home/index/GetMInfoAjax', url).href;
         if (url.includes('/episode')) {
             requestUrl = new URL('/home/index/GetEInfoAjax', url).href;
