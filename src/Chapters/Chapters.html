@@ -83,17 +83,12 @@
         const param = document.getElementById('divU').textContent.trim();
         const extra = document.getElementById('divS').textContent.trim();
         const e2 = document.getElementById('hIsW').value.trim();
-        console.log("pass: " + pass);
-        console.log("param: " + param);
-        console.log("extra: " + extra);
-        console.log("e2: " + e2);
         const body = `pass=${pass}&e2=${e2}`;
         let requestUrl = new URL('/home/index/GetMInfoAjax', url).href;
         if (url.includes('/episode')) {
             requestUrl = new URL('/home/index/GetEInfoAjax', url).href;
         }
         request = new ModuleRequest(requestUrl, 'post', requestHeaders, body);
-        console.log('req ' + JSON.stringify(request));
     } else {
         let script = document.querySelector('script').innerHTML.replace('/*', '').replace('*/', '');
         let data = JSON.parse(script);
@@ -111,6 +106,7 @@
             }
         }
         if (data.val) {
+            console.log("\n\n\n sending req to " + data.val);
             output = {};
             const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
             output.rawVideo = [new RawVideo([video], subs)];
@@ -119,7 +115,6 @@
             subs = null;
         }
     }
-    console.log('heres output ' + JSON.stringify(output));
     let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
     var chaptersObject = new Chapters(request, emptyExtra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
     var finalJson = JSON.stringify(chaptersObject);
