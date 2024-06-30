@@ -77,6 +77,8 @@
     let request = new ModuleRequest('', '', emptyKeyValue, null);
     const url = parsedJson.request.url;
     const requestHeaders = [new KeyValue('x-requested-with', 'XMLHttpRequest'), new KeyValue('referer', url), new KeyValue('content-type', 'application/x-www-form-urlencoded; charset=UTF-8')];
+    console.log('refer data ' + JSON.stringify(requestHeaders));
+    
     if (url.includes('/M') || url.includes('/episode')) {
         const pass = document.getElementById('hId').value.trim();
         const param = document.getElementById('divU').textContent.trim();
@@ -107,15 +109,13 @@
         if (data.val) {
             output = {};
             const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
-            console.log('vidqual: ' + video.videoQuality);
-            console.log('vidlink: ' + JSON.stringify(video), null, 4);
-            console.log('vidlink: ' + JSON.stringify(video.videoLink), null, 4);
             output.rawVideo = [new RawVideo([video], subs)];
         }
         if (subs.length == 0) {
             subs = null;
         }
     }
+    console.log('heres output ' + JSON.stringify(output));
     let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
     var chaptersObject = new Chapters(request, emptyExtra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
     var finalJson = JSON.stringify(chaptersObject);
