@@ -106,7 +106,7 @@
             }
         }
         if (data.val) {
-            console.log("\n\n\n sending req to " + data.val);
+            console.log('\n\n\n sending req to ' + data.val);
             output = {};
             const video = new Video('Normal', new ModuleRequest(data.val, 'get', emptyKeyValue, null));
             output.rawVideo = [new RawVideo([video], subs)];
