@@ -71,6 +71,7 @@
     }
     var savedData = document.getElementById('ketsu-final-data');
     var parsedJson = JSON.parse(savedData.innerHTML);
+
     var subs = [];
     var output = parsedJson.output.videos;
     var emptyKeyValue = [new KeyValue('', '')];
@@ -80,8 +81,6 @@
     
     if (url.includes('/M') || url.includes('/episode')) {
         const pass = document.getElementById('hId').value.trim();
-        const param = document.getElementById('divU').textContent.trim();
-        const extra = document.getElementById('divS').textContent.trim();
         const e2 = document.getElementById('hIsW').value.trim();
         const body = `pass=${pass}&e2=${e2}`;
         let requestUrl = new URL('/home/index/GetMInfoAjax', url).href;
@@ -115,6 +114,7 @@
             subs = null;
         }
     }
+
     let emptyExtra = new Extra([new Commands('', emptyKeyValue)], emptyKeyValue);
     var chaptersObject = new Chapters(request, emptyExtra, new JavascriptConfig(true, false, ''), new Output(output, null, null));
     var finalJson = JSON.stringify(chaptersObject);
