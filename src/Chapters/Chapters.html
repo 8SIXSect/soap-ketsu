@@ -77,7 +77,6 @@
     let request = new ModuleRequest('', '', emptyKeyValue, null);
     const url = parsedJson.request.url;
     const requestHeaders = [new KeyValue('x-requested-with', 'XMLHttpRequest'), new KeyValue('referer', url), new KeyValue('content-type', 'application/x-www-form-urlencoded; charset=UTF-8')];
-    console.log('refer data ' + JSON.stringify(requestHeaders));
     
     if (url.includes('/M') || url.includes('/episode')) {
         const pass = document.getElementById('hId').value.trim();
@@ -90,6 +89,7 @@
             requestUrl = new URL('/home/index/GetEInfoAjax', url).href;
         }
         request = new ModuleRequest(requestUrl, 'post', requestHeaders, body);
+        console.log('req ' + JSON.stringify(request));
     } else {
         let script = document.querySelector('script').innerHTML.replace('/*', '').replace('*/', '');
         let data = JSON.parse(script);
