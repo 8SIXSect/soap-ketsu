@@ -98,12 +98,13 @@
         if (subtitles == undefined) {
             subtitles = '';
         } else {
+            let noSubsRequest = new ModuleRequest('https://raw.githubusercontent.com/beanoda/soaper-ketsu/main/no_subtitles.srt', 'get', emptyKeyValue, null);
+            subs.push(new VideoSub('NoSubtitles', noSubsRequest));
             for (sub of subtitles) {
                 var language = sub.name;
                 var link = BASE_URL + sub.path;
                 link = new ModuleRequest(link, 'get', emptyKeyValue, null);
                 var subobj = new VideoSub(language, link);
-                console.log('hello ' + link);
                 subs.push(subobj);
             }
         }
