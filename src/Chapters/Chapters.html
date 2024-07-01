@@ -103,6 +103,7 @@
                 var link = BASE_URL + sub.path;
                 link = new ModuleRequest(link, 'get', emptyKeyValue, null);
                 var subobj = new VideoSub(language, link);
+                console.log('hello ' + link);
                 subs.push(subobj);
             }
         }
